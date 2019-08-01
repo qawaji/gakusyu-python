@@ -41,5 +41,3 @@ def pleaseConfirmOnepass(caps):
 pleaseConfirm(cap1)
 pleaseConfirmOnepass(cap1)
 pleaseConfirm(cap3)
-
-print(cap1)
