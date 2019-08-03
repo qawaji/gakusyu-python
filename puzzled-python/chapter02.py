@@ -6,6 +6,12 @@ sched2 = [(6.0, 8.0), (6.5, 12.0), (6.5, 7.0), (7.0, 8.0),
           (7.5, 10.0), (8.0, 9.0), (8.0, 10.0), (9.0, 12.0),
           (9.5, 10.0), (10.0, 11.0), (10.0, 12.0), (11.0, 12.0)]
 
+sched3 = [(6.0, 8.0, 2), (6.5, 12.0, 1), (6.5, 7.0, 2), 
+          (7.0, 8.0, 2), (7.5, 10.0, 3), (8.0, 9.0, 2), 
+          (8.0, 10.0, 1), (9.0, 12.0, 2),
+          (9.5, 10.0, 4), (10.0, 11.0, 2), 
+          (10.0, 12.0, 3), (11.0, 12.0, 7)]
+
 def bestTimeToParty(schedule):
   start = schedule[0][0]
   end = schedule[0][1]
@@ -66,22 +72,22 @@ def chooseTime(times, ystart, yend):
   return maxcount, time
 
 def bestTimeToParty2(schedule):
-  maxcount = time = 0
-  for ict, (ct_start, ct_end) in enumerate(schedule):
-    count = 1 # include target
-    for ica, (ca_start, ca_end) in enumerate(schedule):
+  maxvalue = time = 0
+  for ict, (ct_start, ct_end, ct_f) in enumerate(schedule):
+    value = ct_f # include target
+    for ica, (ca_start, ca_end, ca_f) in enumerate(schedule):
       if ict == ica:
         continue      
       if ca_start <= ct_start and ct_start < ca_end:
-        count += 1
-        if count > maxcount:
-          maxcount = count
+        value += ca_f
+        if value > maxvalue:
+          maxvalue = value
           time = ct_start
 
   print('Best time to attend the party is at', time, 'o\'clock',
-        ':', maxcount, 'celebrities will be attending!')
+        ': celebrities value is', maxvalue, '!')
 
 
 bestTimeToParty(sched)
 bestTimeToPartySmart(sched2, 5.0, 13.0)
-bestTimeToParty2(sched2)
+bestTimeToParty2(sched3)
