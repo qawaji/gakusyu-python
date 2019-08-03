@@ -13,11 +13,11 @@ deck = ['A_C', 'A_D', 'A_H', 'A_S',
         'K_C', 'K_D', 'K_H', 'K_S',]
 
 class Card:
-  def __init__(self, name, idx, suit, number):
+  def __init__(self, name):
     self.name = name
-    self.idx = idx
-    self.suit = suit
-    self.number = number
+    self.idx = deck.index(name)
+    self.suit = self.idx % 4
+    self.number = self.idx // 4
 
 def AssistantOrdersCards():
   print('Cards are character strings as shown below.')
@@ -27,11 +27,7 @@ def AssistantOrdersCards():
   for i in range(5):
     print('Please give card', i + 1, end = ' ')
     name = input('in above format:')
-    idx = deck.index(name)
-    suit = idx % 4
-    number = idx // 4
-
-    card = Card(name, idx, suit, number)
+    card = Card(name)
     cards.append(card)
     numsuits[card.suit] += 1
     if numsuits[card.suit] > 1:
@@ -49,8 +45,9 @@ def AssistantOrdersCards():
       remindices.append(c)
 
   remindices.sort(key=lambda x:x.idx)
-  outputNext3Cards(encode, remindices)
-  return
+  outcards = [other]
+  outcards.extend(outputNext3Cards(encode, remindices))
+  return outcards
 
 def outputFirstCard(oneTwo):
   encode = (oneTwo[0].number - oneTwo[1].number) % 13
@@ -80,5 +77,42 @@ def outputNext3Cards(code, cards):
   print('Second card is:', s.name)
   print('Third card is:', t.name)
   print('Fourth card is:', f.name)
+  return [s, t, f]
 
-AssistantOrdersCards()
+def MagicianGuessesCard():
+  print('Cards are character strings as shown below.')
+  print('Ordering is:', deck)
+  cards = []
+  for i in range(4):
+    print('Please give card', i + 1, end = ' ')
+    name = input('in above format:')
+    card = Card(name)
+    cards.append(card)
+    if i == 0:
+      suit = card.suit
+      number = card.number
+  if cards[1].idx < cards[2].idx and cards[1].idx < cards[3].idx:
+    if cards[2].idx < cards[3].idx:
+      encode = 1
+    else:
+      encode = 2
+  elif ((cards[1].idx < cards[2].idx and cards[1].idx > cards[3].idx)
+  or (cards[1].idx > cards[2].idx and cards[1].idx < cards[3].idx)):
+    if cards[2] < cards[3]:
+      encode = 3
+    else:
+      encode = 4
+  elif cards[1].idx > cards[2].idx and cards[1].idx > cards[3].idx:
+    if cards[2].idx < cards[3].idx:
+      encode = 5
+    else:
+      encode = 6
+  hiddennumber = (number + encode) % 13
+  index = hiddennumber * 4 + suit
+  print('Hidden card is:', deck[index])
+
+
+outcards = AssistantOrdersCards()
+print(list(map(lambda x: x.name, outcards)))
+
+MagicianGuessesCard()
