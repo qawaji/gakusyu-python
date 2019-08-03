@@ -67,18 +67,16 @@ def chooseTime(times, ystart, yend):
 
 def bestTimeToParty2(schedule):
   maxcount = time = 0
-  for iTarget in range(len(schedule)):
+  for ict, (ct_start, ct_end) in enumerate(schedule):
     count = 1 # include target
-    for iAnother in range(len(schedule)):
-      if iTarget == iAnother:
+    for ica, (ca_start, ca_end) in enumerate(schedule):
+      if ict == ica:
         continue      
-      target = schedule[iTarget]
-      another = schedule[iAnother]      
-      if another[0] <= target[0] and target[0] < another[1]:
+      if ca_start <= ct_start and ct_start < ca_end:
         count += 1
         if count > maxcount:
           maxcount = count
-          time = target[0]
+          time = ct_start
 
   print('Best time to attend the party is at', time, 'o\'clock',
         ':', maxcount, 'celebrities will be attending!')
