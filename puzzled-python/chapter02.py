@@ -45,18 +45,10 @@ def bestTimeToPartySmart(schedule, ystart, yend):
   for (cs, ce) in schedule:
     times.append((cs, 'start'))
     times.append((ce, 'end'))
-  sortList(times)
+  times.sort(key=lambda x: x[0])
   maxcount, time = chooseTime(times, ystart, yend)
   print('Best time to attend the party is at', time, 'o\'clock',
         ':', maxcount, 'celebrities will be attending!')
-
-def sortList(tlist):
-  for ind in range(len(tlist) - 1):
-    iSm = ind
-    for i in range(ind, len(tlist)):
-      if tlist[iSm][0] > tlist[i][0]:
-        iSm = i
-    tlist[ind], tlist[iSm] = tlist[iSm], tlist[ind]
 
 def chooseTime(times, ystart, yend):
   rcount = 0
