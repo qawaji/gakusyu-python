@@ -34,13 +34,13 @@ def celebrityDensity(schedule, start, end):
         count[i] += 1
   return count
 
-def bestTimeToPartySmart(schedule):
+def bestTimeToPartySmart(schedule, ystart, yend):
   times = []
   for c in schedule:
     times.append((c[0], 'start'))
     times.append((c[1], 'end'))
   sortList(times)
-  maxcount, time = chooseTime(times)
+  maxcount, time = chooseTime(times, ystart, yend)
   print('Best time to attend the party is at', time, 'o\'clock',
         ':', maxcount, 'celebrities will be attending!')
 
@@ -52,7 +52,7 @@ def sortList(tlist):
         iSm = i
     tlist[ind], tlist[iSm] = tlist[iSm], tlist[ind]
 
-def chooseTime(times):
+def chooseTime(times, ystart, yend):
   rcount = 0
   maxcount = time = 0
   for t in times:
@@ -60,11 +60,30 @@ def chooseTime(times):
       rcount += 1
     elif t[1] == 'end':
       rcount -= 1
-    if rcount > maxcount:
+    if ystart <= t[0] and t[0] < yend and rcount > maxcount:
       maxcount = rcount
       time = t[0]
   return maxcount, time
 
+def bestTimeToParty2(schedule):
+  maxcount = time = 0
+  for iTarget in range(len(schedule)):
+    count = 1 # include target
+    for iAnother in range(len(schedule)):
+      if iTarget == iAnother:
+        continue      
+      target = schedule[iTarget]
+      another = schedule[iAnother]      
+      if another[0] <= target[0] and target[0] < another[1]:
+        count += 1
+        if count > maxcount:
+          maxcount = count
+          time = target[0]
+
+  print('Best time to attend the party is at', time, 'o\'clock',
+        ':', maxcount, 'celebrities will be attending!')
+
 
 bestTimeToParty(sched)
-bestTimeToPartySmart(sched2)
+bestTimeToPartySmart(sched2, 5.0, 13.0)
+bestTimeToParty2(sched2)
