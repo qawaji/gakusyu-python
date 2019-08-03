@@ -16,9 +16,9 @@ def bestTimeToParty(schedule):
   start = schedule[0][0]
   end = schedule[0][1]
 
-  for c in schedule:
-    start = min(c[0], start)
-    end = max(c[1], end)
+  for (cs, ce) in schedule:
+    start = min(cs, start)
+    end = max(ce, end)
 
   count = celebrityDensity(schedule, start, end)
 
@@ -35,16 +35,16 @@ def celebrityDensity(schedule, start, end):
   count = [0] * (end + 1)
   for i in range(start, end + 1):
     count[i] = 0
-    for c in sched:
-      if c[0] <= i and i < c[1]:
+    for (cs, ce) in sched:
+      if cs <= i and i < ce:
         count[i] += 1
   return count
 
 def bestTimeToPartySmart(schedule, ystart, yend):
   times = []
-  for c in schedule:
-    times.append((c[0], 'start'))
-    times.append((c[1], 'end'))
+  for (cs, ce) in schedule:
+    times.append((cs, 'start'))
+    times.append((ce, 'end'))
   sortList(times)
   maxcount, time = chooseTime(times, ystart, yend)
   print('Best time to attend the party is at', time, 'o\'clock',
