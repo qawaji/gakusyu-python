@@ -124,14 +124,18 @@ def ComputerAssistant():
   numsuits = [0, 0, 0, 0]
   number = int(input('Please give random number of at least 6 digits:'))
 
-  for i in range(5):
+  i = 0
+  while len(cards) < 5:    
     number = number * (i + 1) // (i + 2)
     n = number % 52
-    card = Card.CreateByIndex(n)
-    cards.append(card)
-    numsuits[card.suit] += 1
-    if numsuits[card.suit] > 1:
-      pairsuit = card.suit
+    if not any(elm.idx == n for elm in cards):
+      card = Card.CreateByIndex(n)
+      cards.append(card)
+      numsuits[card.suit] += 1
+      if numsuits[card.suit] > 1:
+        pairsuit = card.suit
+    i += 1
+
   cardh = []
   for c in cards:
     if c.suit == pairsuit:
