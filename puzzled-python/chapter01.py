@@ -18,12 +18,12 @@ def pleaseConfirm(caps):
   intervals.append((start, len(caps) - 1, caps[start]))
   flip = 'F' if forward < backward else 'B'
 
-  for t in intervals:
-    if t[2] == flip:
-      if t[0] == t[1]:
-        print('People in position', t[0], 'flip your cap!')
+  for (st, et, dir) in intervals:
+    if dir == flip:
+      if st == et:
+        print('People in position', st, 'flip your cap!')
       else:
-        print('People in positions', t[0], 'through', t[1], 'flip your caps!')
+        print('People in positions', st, 'through', et, 'flip your caps!')
 
 def pleaseConfirmOnepass(caps):
   caps = caps + [caps[0]]

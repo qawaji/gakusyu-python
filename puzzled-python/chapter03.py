@@ -88,9 +88,7 @@ def MagicianGuessesCard():
     name = input('in above format:')
     card = Card(name)
     cards.append(card)
-    if i == 0:
-      suit = card.suit
-      number = card.number
+
   if cards[1].idx < cards[2].idx and cards[1].idx < cards[3].idx:
     if cards[2].idx < cards[3].idx:
       encode = 1
@@ -107,6 +105,9 @@ def MagicianGuessesCard():
       encode = 5
     else:
       encode = 6
+      
+  suit = cards[0].suit
+  number = cards[0].number
   hiddennumber = (number + encode) % 13
   index = hiddennumber * 4 + suit
   print('Hidden card is:', deck[index])
