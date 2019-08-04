@@ -19,6 +19,11 @@ class Card:
     self.suit = self.idx % 4
     self.number = self.idx // 4
 
+  @staticmethod
+  def CreateByIndex(index):
+    name = deck[index]
+    return Card(name)
+
 def AssistantOrdersCards():
   print('Cards are character strings as shown below.')
   print('Ordering is:', deck)
@@ -105,15 +110,50 @@ def MagicianGuessesCard():
       encode = 5
     else:
       encode = 6
-      
+
   suit = cards[0].suit
   number = cards[0].number
   hiddennumber = (number + encode) % 13
   index = hiddennumber * 4 + suit
   print('Hidden card is:', deck[index])
 
+def ComputerAssistant():
+  print('Cards are character strings as shown below.')
+  print('Ordering is:', deck)
+  cards = []
+  numsuits = [0, 0, 0, 0]
+  number = int(input('Please give random number of at least 6 digits:'))
 
-outcards = AssistantOrdersCards()
-print(list(map(lambda x: x.name, outcards)))
+  for i in range(5):
+    number = number * (i + 1) // (i + 2)
+    n = number % 52
+    card = Card.CreateByIndex(n)
+    cards.append(card)
+    numsuits[card.suit] += 1
+    if numsuits[card.suit] > 1:
+      pairsuit = card.suit
+  cardh = []
+  for c in cards:
+    if c.suit == pairsuit:
+      cardh.append(c)
+  hidden, other, encode = outputFirstCard(cardh)
 
-MagicianGuessesCard()
+  remindices = []
+  for c in cards:
+    if c.name != hidden.name and c.name != other.name:
+      remindices.append(c)
+  remindices.sort(key=lambda x:x.idx)
+  outputNext3Cards(encode, remindices)
+  guess = input('What is the hidden card?')
+  if guess == hidden.name:
+    print('You are a Mind Reader Extraordinaire!')
+  else:
+    print('Sorry, not impressed!:', hidden.name)
+
+
+
+#outcards = AssistantOrdersCards()
+#print(list(map(lambda x: x.name, outcards)))
+
+#MagicianGuessesCard()
+ComputerAssistant()
