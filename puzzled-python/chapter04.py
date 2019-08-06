@@ -87,13 +87,33 @@ def EightQueens(n=8):
                     results.append(copy.copy(board))
   return results
 
-def EightQueensCount(count):
+def EightQueensWithCount(count):
   results = EightQueens()
   results = results[0:count]
   for r in results:
     print(r)
   return results
 
+def EightQueensWithLocation(location):
+  # locationで設定されている場所に女王がある場合はTrue
+  def isEqualsLocation(lst, lct):
+    if len(lst) != len(lct):
+      return False
+    
+    for i in range(len(lct)):
+      if lct[i] == -1:
+        continue
+      if lst[i] != lct[i]:
+        return False
+    return True
 
-FourQueens()
-EightQueensCount(8)
+
+  results = EightQueens()
+  results = list(filter(lambda x: isEqualsLocation(x, location), results))
+  for r in results:
+    print(r)
+  return results
+
+#FourQueens()
+#EightQueensWithCount(8)
+EightQueensWithLocation([0, -1, 7, -1, -1, -1, -1, -1])
