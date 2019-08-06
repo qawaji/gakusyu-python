@@ -1,3 +1,5 @@
+import copy
+
 B = [[0, 0, 1, 0],
      [1, 0, 0, 0],
      [0, 0, 0, 1],
@@ -51,6 +53,7 @@ def noConflicts1(board, current):
   return True
 
 def EightQueens(n=8):
+  results = []
   board = [-1] * n
   for i in range(n):
     board[0] = i
@@ -81,9 +84,16 @@ def EightQueens(n=8):
                 for q in range(n):
                   board[7] = q
                   if noConflicts1(board, 7):
-                    print(board)
-  return
+                    results.append(copy.copy(board))
+  return results
+
+def EightQueensCount(count):
+  results = EightQueens()
+  results = results[0:count]
+  for r in results:
+    print(r)
+  return results
 
 
 FourQueens()
-EightQueens()
+EightQueensCount(8)
