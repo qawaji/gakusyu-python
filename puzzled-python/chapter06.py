@@ -32,11 +32,29 @@ def CoinComparison(coinsList):
     currList = findFakeGroup(group1, group2, group3)
     counter += 1
   fake = currList[0]
-  print('Take fake coin is coin', coinsList.index(fake) + 1, 'in the original list')
+  index = coinsList.index(fake)
+
+  allSameWeight = (coinsList[0] == coinsList[-1]) if index == 0 else False
+  if allSameWeight:
+    counter += 1
+    print('All same weight!')
+  else:
+    print('Take fake coin is coin', index + 1, 'in the original list')
+  
   print('Number of weighings:', counter)
 
 coinsList = [ 10, 10, 10, 10, 10, 10, 11, 10, 10, 
               10, 10, 10, 10, 10, 10, 10, 10, 10, 
               10, 10, 10, 10, 10, 10, 10, 10, 10, ]
 
+coinsList2 = [ 10, 10, 10, 10, 10, 10, 10, 10, 10, 
+              10, 10, 10, 10, 10, 10, 10, 10, 10, 
+              10, 10, 10, 10, 10, 10, 10, 10, 10, ]
+
+coinsList3 = [ 11, 10, 10, 10, 10, 10, 10, 10, 10, 
+              10, 10, 10, 10, 10, 10, 10, 10, 10, 
+              10, 10, 10, 10, 10, 10, 10, 10, 10, ]
+
 CoinComparison(coinsList)
+CoinComparison(coinsList2)
+CoinComparison(coinsList3)
